@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vnq7jq7*1zud=a_6-o%t#&@6k5ot2i0*jcja!@ap8lisb2d9h+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['punOmeter.onrender.com']
+ALLOWED_HOSTS = ['punometer.onrender.com']
 
 
 # Application definition
