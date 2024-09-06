@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate a Pun</title>
+    <link rel="stylesheet" href="{% static 'puns/styles.css' %}">
+
+</head>
+<body>
+    <div class="container">
+    <h2>Rate the Pun</h2>
+    <form method="POST" id="rating-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Rating</button>
+    </form>
+
+    <h3>Current Average Rating: <span id="average-rating">{{ pun.get_avg_rating }}</span></h3>
+
+    <a href="{% url 'puns_list' %}">Back to Puns List</a>
+</div>
+<script>
+    const punId = "{{ pun.id }}";
+    const ratingForm = document.getElementById('rating-form');
+    const averageRating = document.getElementById('average-rating');
+
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const ws = new WebSocket(`${protocol}//${window.location.host}/ws/puns/${punId}/`);
+
+    ws.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        averageRating.textContent = data.new_avg_rating.toFixed(1);
+    };
+
+    ratingForm.onsubmit = function(event) {
+        event.preventDefault();
+        const formData = new FormData(ratingForm);
+        const rating = formData.get('rating');
+        ws.send(JSON.stringify({'rating': rating}));
+    };
+</script>
+</body>
+</html>

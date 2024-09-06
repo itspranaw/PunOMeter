@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punsters Leaderboard</title>
+    <link rel="stylesheet" href="{% static 'puns/styles.css' %}">
+
+</head>
+<body>
+    <div class="container">
+    <h2>Top Punsters</h2>
+
+    <h3>Top Punsters by Number of Puns</h3>
+    <ul>
+        {% for user in top_punsters_by_count %}
+            <li>{{ user.username }} - {{ user.num_puns }} puns</li>
+        {% empty %}
+            <li>No punsters yet!</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Top Punsters by Average Rating</h3>
+    <ul>
+        {% for user in top_punsters_by_rating %}
+            <li>{{ user.username }} - {{ user.avg_rating|floatformat:1 }} average rating</li>
+        {% empty %}
+            <li>No ratings yet!</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'puns_list' %}">Back to Puns List</a>
+</div>
+</body>
+</html>

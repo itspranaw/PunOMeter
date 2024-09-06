@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pun-O-Meter</title>
+    <link rel="stylesheet" href="{% static 'puns/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Puns List</h2>
+        <a href="{% url 'submit_pun' %}">Submit a New Pun</a>
+        {% for pun in puns %}
+        <div class="pun-card">
+            <p>{{ pun.text }}</p>
+            <a href="{% url 'rate_pun' pun.id %}">Rate this pun</a>
+        </div>
+        {% endfor %}
+        <a href="{% url 'leaderboard' %}">View Leaderboard</a>
+    </div>
+</body>
+</html>
